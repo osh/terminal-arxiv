@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-CurseArXiv - A Textual-based ArXiv browser for AI/ML/Wireless research papers.
+TArXiv - Terminal ArXiv Browser
+
+A Textual-based ArXiv paper browser for AI/ML/Wireless research.
 
 Focuses on:
 - Wireless Physical Layer Optimization (5G, 6G, WiFi)
@@ -245,7 +247,7 @@ class ArXivFetcher:
     def fetch_papers(self) -> list[Paper]:
         url = self._build_query()
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "CurseArXiv/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "TArXiv/1.0"})
             with urllib.request.urlopen(req, timeout=30) as response:
                 xml_content = response.read().decode("utf-8")
         except Exception:
@@ -275,7 +277,7 @@ class FullPaperFetcher:
         url = self.get_html_url(paper.arxiv_id)
         try:
             req = urllib.request.Request(url, headers={
-                "User-Agent": "CurseArXiv/1.0 (Academic paper reader)"
+                "User-Agent": "TArXiv/1.0 (Academic paper reader)"
             })
             with urllib.request.urlopen(req, timeout=30) as response:
                 html_content = response.read().decode("utf-8")
@@ -530,7 +532,7 @@ class HelpScreen(ModalScreen):
     ]
 
     def compose(self) -> ComposeResult:
-        help_text = """# CurseArXiv Help
+        help_text = """# TArXiv Help
 
 ## Navigation
 | Key | Action |
@@ -562,7 +564,7 @@ class HelpScreen(ModalScreen):
 
 ## About
 
-CurseArXiv fetches papers from ArXiv in AI, ML, Signal Processing,
+TArXiv fetches papers from ArXiv in AI, ML, Signal Processing,
 and related categories. Papers are scored based on relevance to
 wireless physical layer optimization and ML topics.
 
@@ -579,8 +581,8 @@ Press `Escape` to close this help.
         self.dismiss()
 
 
-class CurseArXivApp(App):
-    """Main Textual application for CurseArXiv."""
+class TArXivApp(App):
+    """Main Textual application for TArXiv."""
 
     CSS = """
     Screen {
@@ -951,7 +953,7 @@ class CurseArXivApp(App):
 
 
 def main():
-    app = CurseArXivApp()
+    app = TArXivApp()
     app.run()
 
 

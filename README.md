@@ -1,8 +1,17 @@
-# CurseArXiv
+# TArXiv - Terminal ArXiv Browser
 
 A modern terminal-based ArXiv paper browser built with [Textual](https://textual.textualize.io/), designed for researchers working on **wireless communications**, **physical layer optimization**, and **machine learning** for wireless systems.
 
-![CurseArXiv Screenshot](https://via.placeholder.com/800x400?text=CurseArXiv+Terminal+UI)
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TArXiv - Terminal ArXiv Browser                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ [ 22.5] 01/15 Achievable DoF Analysis in Massive MIMO...    W:mimo ML:deep  │
+│ [  9.0] 01/14 Deep Learning for Channel Estimation...       W:5g ML:neural  │
+│ [  7.5] 01/14 RIS-Aided Beamforming Optimization...         W:ris W:beam    │
+│ [  6.0] 01/13 Federated Learning in 6G Networks...          W:6g ML:fed     │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ## Features
 
@@ -33,14 +42,14 @@ Vim-style navigation throughout:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cursearxiv.git
-cd cursearxiv
+git clone https://github.com/yourusername/tarxiv.git
+cd tarxiv
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Run
-python cursearxiv.py
+python tarxiv.py
 ```
 
 ### Requirements
@@ -52,7 +61,7 @@ python cursearxiv.py
 ### Quick Start
 
 ```bash
-python cursearxiv.py
+python tarxiv.py
 ```
 
 The app will immediately fetch recent papers and display the most relevant ones.
@@ -78,7 +87,7 @@ The app will immediately fetch recent papers and display the most relevant ones.
 
 ### Paper Fetching
 
-CurseArXiv uses the [ArXiv API](https://info.arxiv.org/help/api/index.html) to fetch recent papers from these categories:
+TArXiv uses the [ArXiv API](https://info.arxiv.org/help/api/index.html) to fetch recent papers from these categories:
 
 | Category | Description |
 |----------|-------------|
@@ -145,11 +154,11 @@ WIRELESS_KEYWORDS = {
 }
 ```
 
-## Why CurseArXiv?
+## Why TArXiv?
 
 If you're a researcher in wireless communications, signal processing, or ML for wireless systems, you know the challenge: **hundreds of papers are published weekly** across multiple ArXiv categories. Finding the ones relevant to your specific interests—like physical layer optimization for 5G/6G, MIMO systems, or ML-based channel estimation—requires manually checking multiple categories and reading countless abstracts.
 
-CurseArXiv solves this by:
+TArXiv solves this by:
 - **Automated relevance scoring** - Papers are ranked based on your research interests
 - **Cross-category search** - Searches multiple relevant categories simultaneously
 - **Smart filtering** - Papers combining wireless + ML topics get bonus scores

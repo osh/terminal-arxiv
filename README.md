@@ -1,29 +1,8 @@
 # CurseArXiv
 
-A terminal-based ArXiv paper browser built with Python ncurses, designed for researchers working on **wireless communications**, **physical layer optimization**, and **machine learning** for wireless systems.
+A modern terminal-based ArXiv paper browser built with [Textual](https://textual.textualize.io/), designed for researchers working on **wireless communications**, **physical layer optimization**, and **machine learning** for wireless systems.
 
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║              CurseArXiv - Wireless/ML Paper Browser                    ║
-╠════════════════════════════════════════════════════════════════════════╣
-║ [22.5] 01/15 Achievable DoF Analysis in Massive MIMO...    W:mimo ML:  ║
-║ [ 9.0] 01/14 Deep Learning for Channel Estimation...       W:5g ML:dee ║
-║ [ 7.5] 01/14 RIS-Aided Beamforming Optimization...         W:ris W:bea ║
-║ [ 6.0] 01/13 Federated Learning in 6G Networks...          W:6g ML:fed ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
-
-## Why CurseArXiv?
-
-If you're a researcher in wireless communications, signal processing, or ML for wireless systems, you know the challenge: **hundreds of papers are published weekly** across multiple ArXiv categories. Finding the ones relevant to your specific interests—like physical layer optimization for 5G/6G, MIMO systems, or ML-based channel estimation—requires manually checking multiple categories and reading countless abstracts.
-
-CurseArXiv solves this by:
-
-- **Automated relevance scoring** - Papers are ranked based on keyword matching for wireless/PHY and ML topics
-- **Cross-category search** - Searches cs.AI, cs.LG, cs.IT, cs.NI, eess.SP, eess.SY, and stat.ML simultaneously
-- **Smart filtering** - Papers combining wireless + ML topics get bonus scores (the sweet spot!)
-- **Full paper reading** - Read entire papers directly in your terminal via ArXiv's HTML view
-- **Zero dependencies** - Pure Python standard library, works anywhere Python runs
+![CurseArXiv Screenshot](https://via.placeholder.com/800x400?text=CurseArXiv+Terminal+UI)
 
 ## Features
 
@@ -33,19 +12,22 @@ CurseArXiv solves this by:
 - Papers combining both wireless AND ML topics receive 1.5x relevance bonus
 - Configurable time window (1-30 days) and minimum score threshold
 
-### Terminal-Native Reading Experience
+### Modern Terminal UI
+- Built with Textual for a rich, responsive terminal experience
 - **List View** - Browse papers sorted by relevance with scores, dates, and topic tags
-- **Detail View** - See title, authors, abstract summary, categories, and links
-- **Full Paper View** - Read the complete paper text directly in ncurses (fetched from ArXiv HTML)
-- **Search** - Filter papers or search within full paper text
+- **Detail View** - See title, authors, abstract, categories, and links
+- **Full Paper View** - Read complete papers with Markdown rendering (fetched from ArXiv HTML)
+- Modal dialogs for search and settings
+- Background loading with progress indicators
 
 ### Keyboard-Driven Workflow
 Vim-style navigation throughout:
-- `j/k` - Navigate/scroll
-- `g/G` - Jump to top/bottom
-- `/` - Search
+- `j/k` or arrow keys - Navigate
+- `Enter` - Open detail view
 - `f` - Load full paper text
 - `o` - Open in browser
+- `/` - Search papers
+- `Escape` - Go back
 
 ## Installation
 
@@ -54,69 +36,49 @@ Vim-style navigation throughout:
 git clone https://github.com/yourusername/cursearxiv.git
 cd cursearxiv
 
-# No dependencies to install! Just run:
-python3 cursearxiv.py
+# Install dependencies
+pip install -r requirements.txt
+
+# Run
+python cursearxiv.py
 ```
 
 ### Requirements
 - Python 3.9+
-- No external packages required (uses only standard library)
-- Works on macOS, Linux, and WSL
+- textual >= 0.40.0
 
 ## Usage
 
 ### Quick Start
 
 ```bash
-python3 cursearxiv.py
+python cursearxiv.py
 ```
 
-The tool will immediately fetch recent papers and display the most relevant ones.
+The app will immediately fetch recent papers and display the most relevant ones.
 
 ### Keyboard Controls
 
-#### List View
 | Key | Action |
 |-----|--------|
 | `j` / `↓` | Move down |
 | `k` / `↑` | Move up |
-| `Enter` | Open detail view |
+| `Enter` | Open detail view / select |
+| `Escape` | Go back |
 | `f` | Load full paper text |
-| `/` | Search/filter papers |
-| `r` | Refresh from ArXiv |
-| `d` | Change days to fetch |
-| `s` | Set minimum score |
-| `1-7` | Quick set days (1-7) |
-| `+/-` | Adjust min score |
-| `c` | Clear filters |
-| `?` | Help |
+| `o` | Open paper in browser |
+| `/` | Search papers |
+| `c` | Clear search filter |
+| `s` | Settings (days, min score) |
+| `r` | Refresh papers from ArXiv |
+| `?` | Show help |
 | `q` | Quit |
-
-#### Detail View
-| Key | Action |
-|-----|--------|
-| `j/k` | Scroll |
-| `a` | Show full abstract |
-| `f` | Load full paper |
-| `o` | Open in browser |
-| `Esc` | Back to list |
-
-#### Full Paper View
-| Key | Action |
-|-----|--------|
-| `j/k` | Scroll line by line |
-| `PgUp/PgDn` | Scroll by page |
-| `g/G` | Jump to top/bottom |
-| `/` | Search in paper |
-| `n` | Next search match |
-| `o` | Open in browser |
-| `Esc` | Back to detail view |
 
 ## How It Works
 
 ### Paper Fetching
 
-CurseArXiv uses the [ArXiv API](https://info.arxiv.org/help/api/index.html) to fetch recent papers. It queries these categories:
+CurseArXiv uses the [ArXiv API](https://info.arxiv.org/help/api/index.html) to fetch recent papers from these categories:
 
 | Category | Description |
 |----------|-------------|
@@ -150,47 +112,20 @@ Papers are scored based on keyword matching in titles and abstracts:
 
 ### Full Paper Reading
 
-When you press `f`, CurseArXiv fetches the paper from ArXiv's HTML view (`arxiv.org/html/PAPER_ID`). This works for most papers submitted with LaTeX source (the vast majority of recent papers).
+Press `f` to fetch the full paper from ArXiv's HTML view (`arxiv.org/html/PAPER_ID`). This works for most papers submitted with LaTeX source.
 
-The HTML is parsed and converted to readable text:
-- Section headers are highlighted
-- Math equations show LaTeX alt-text when available
-- Figures and tables are marked with `[Figure]` and `[Table]`
+The HTML is parsed and rendered as Markdown:
+- Section headers formatted properly
+- Math equations shown in code blocks
+- Figures and tables marked appropriately
 - Clean paragraph formatting
-
-## Examples
-
-### Find papers on RIS + Deep Learning
-```
-1. Launch: python3 cursearxiv.py
-2. Press / and type: ris
-3. Papers mentioning RIS/IRS will be filtered
-4. Top results will have both W:ris and ML: tags
-```
-
-### Read a paper on MIMO channel estimation
-```
-1. Navigate to a relevant paper with j/k
-2. Press Enter to see details and abstract
-3. Press f to load the full paper
-4. Use / to search for "channel estimation"
-5. Press n to jump between matches
-```
-
-### Adjust search parameters
-```
-1. Press d and enter 3 for last 3 days only
-2. Press s and enter 5 to require score >= 5
-3. Press + repeatedly to increase min score
-4. Press c to clear all filters
-```
 
 ## Configuration
 
 Currently, configuration is done by modifying the source code. Key areas to customize:
 
 ### Change Categories
-Edit `ArXivFetcher.CATEGORIES` to add/remove ArXiv categories:
+Edit `ArXivFetcher.CATEGORIES`:
 
 ```python
 CATEGORIES = [
@@ -210,28 +145,21 @@ WIRELESS_KEYWORDS = {
 }
 ```
 
-### Defaults
-Modify `CurseArXivUI.__init__()` to change default settings:
+## Why CurseArXiv?
 
-```python
-self.days_back = 7      # Default time window
-self.min_score = 0.0    # Default minimum score
-```
+If you're a researcher in wireless communications, signal processing, or ML for wireless systems, you know the challenge: **hundreds of papers are published weekly** across multiple ArXiv categories. Finding the ones relevant to your specific interests—like physical layer optimization for 5G/6G, MIMO systems, or ML-based channel estimation—requires manually checking multiple categories and reading countless abstracts.
 
-## Troubleshooting
+CurseArXiv solves this by:
+- **Automated relevance scoring** - Papers are ranked based on your research interests
+- **Cross-category search** - Searches multiple relevant categories simultaneously
+- **Smart filtering** - Papers combining wireless + ML topics get bonus scores
+- **Terminal-native** - Read papers without leaving your terminal
 
-### "No papers found"
-- Try increasing the time window with `d` (some days have fewer submissions)
-- Lower the minimum score with `s` or `-`
-- Check your internet connection
+## Tech Stack
 
-### "HTML version not available"
-- Some older papers or those without LaTeX source don't have HTML versions
-- Press `o` to open the PDF in your browser instead
-
-### Display issues
-- Ensure your terminal supports colors and is at least 80 columns wide
-- Try resizing your terminal window
+- **[Textual](https://textual.textualize.io/)** - Modern TUI framework for Python
+- **ArXiv API** - Paper metadata and search
+- **ArXiv HTML** - Full paper content
 
 ## Contributing
 
@@ -240,9 +168,9 @@ Contributions are welcome! Some ideas:
 - [ ] Add configuration file support (YAML/JSON)
 - [ ] Bookmark/save favorite papers
 - [ ] Export paper lists to BibTeX
-- [ ] Add more keyword categories (computer vision, NLP, etc.)
+- [ ] Add more keyword categories
 - [ ] Cached paper storage for offline reading
-- [ ] Custom color schemes
+- [ ] Custom color themes
 
 ## License
 
@@ -251,9 +179,9 @@ MIT License - feel free to use, modify, and distribute.
 ## Acknowledgments
 
 - [ArXiv](https://arxiv.org/) for providing open access to scientific papers and their API
-- The Python `curses` library for terminal UI capabilities
+- [Textual](https://textual.textualize.io/) for the excellent TUI framework
 - The wireless communications and ML research community
 
 ---
 
-**Happy paper hunting!** If you find CurseArXiv useful for your research, consider giving it a star.
+**Happy paper hunting!**

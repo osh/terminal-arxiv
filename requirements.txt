@@ -1,0 +1,6 @@
+# CurseArXiv - No external dependencies required!
+# Uses only Python standard library:
+# - curses (terminal UI)
+# - urllib (HTTP requests)
+# - xml.etree (XML parsing)
+# - dataclasses, textwrap, re, html, datetime
